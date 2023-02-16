@@ -19,9 +19,8 @@ class Admin extends Utilisateur{
         $c->execute(array('login' => $login, 'mdp' => $mdp));
         $resultat = $c->fetchAll();
         if (!empty($resultat)){
-            session_start();
             foreach ($resultat as $item) {
-                $this->hydrate($item);
+                $this->setId($item['id_admin']);
             }
         }else{
             header("Location: ".$location);

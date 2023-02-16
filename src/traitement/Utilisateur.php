@@ -10,6 +10,7 @@ class Utilisateur
     protected $mdp;
     protected $equipe;
     protected $age;
+    protected $id;
     public function __construct($nom,$prenom,$login,$mdp,$age,$equipe){
         $this->nom=$nom;
         $this->prenom=$prenom;
@@ -24,13 +25,15 @@ class Utilisateur
         $c->execute(array('login' => $login, 'mdp' => $mdp));
         $resultat = $c->fetchAll();
         if (!empty($resultat)){
-            session_start();
             foreach ($resultat as $item) {
-                $this->hydrate($item);
+                $this->setId($item['id_utilisateur']);
                 }
         }else{
             header("Location: index.php");
         }
+    }
+    public function setId($id){
+        $this->id = $id;
     }
     public function inscription($nom, $prenom,$login,$mdp,$age,$equipe, $location){
         $cobdd = new bdd("THAY", "localhost", "", "root");
