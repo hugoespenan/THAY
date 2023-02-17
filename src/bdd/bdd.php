@@ -1,9 +1,7 @@
 <?php
 
-namespace entre;
 
-use Exception;
-use PDO;
+
 
 class bdd
 {

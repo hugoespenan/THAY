@@ -1,3 +1,9 @@
+<?php
+session_start();
+require_once '../src/traitement/matchs.php';
+require_once '../src/bdd/bdd.php';
+$bdd = new bdd("projet_thay", "localhost", "", "root");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,8 +83,8 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-5 mx-auto text-center">
-            <h1 class="text-white">Matches</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, molestias repudiandae pariatur.</p>
+            <h1 class="text-white">Matchs</h1>
+            <p>Les résultats et les prochains matchs du FC THAY ⚽🥅</p>
           </div>
         </div>
       </div>
@@ -91,25 +97,53 @@
 
       <div class="row">
         <div class="col-lg-12">
-          
+            <?php $match = new matchs();
+            $match->setScoreEquipe1(5);
+            $match->setScoreEquipe2(2);
+            ?>
           <div class="d-flex team-vs">
-            <span class="score">4-1</span>
+            <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
             <div class="team-1 w-50">
               <div class="team-details w-100 text-center">
                 <img src="images/logo_1.png" alt="Image" class="img-fluid">
-                <h3>LA LEGA <span>(win)</span></h3>
+                <h3>FC THAY </h3>
                 <ul class="list-unstyled">
-                  <li>Anja Landry (7)</li>
-                  <li>Eadie Salinas (12)</li>
-                  <li>Ashton Allen (10)</li>
-                  <li>Baxter Metcalfe (5)</li>
+                    <?php
+                    $bdd = new bdd("projet_thay", "localhost", "", "root");
+                    $requ = $bdd->b->query("SELECT joueur_foot.* FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN joueur_foot ON joueur_foot.id_joueur_foot = buteur.ref_joueur_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot AND buteur.ref_match = resultat_foot.id_resultat_foot");
+                    $requ->fetchAll();
+                    $equipebuteur = 0;
+                    foreach ($requ as $value){
+                        $equipebuteur = $value['ref_equipe'];
+                    }
+                    $r2 = $bdd->b->prepare("SELECT nom FROM equipe WHERE id_equipe = :equipe");
+                    $r2->execute(array('equipe' => $equipebuteur));
+                    foreach ($requ as $item){
+                            if ($item['ref_equipe'] == $item['id_equipe']){
+                                $buteur = new matchs();
+                                $buteur->setButeurEquipe1($item['nom']);
+                                ?>
+                                <li><?php echo $buteur->getButeurEquipe1() ?></li>
+                           <?php
+                            }
+                        if ($item['ref_equipe'] == $item['score_equipe_2']){
+                            $buteur = new matchs();
+                            $buteur->setButeurEquipe2($item['nom']);
+                            ?>
+                            <li><?php echo $buteur->getButeurEquipe2() ?></li>
+                            <?php
+                        }
+                    }
+
+
+                  ?>
                 </ul>
               </div>
             </div>
             <div class="team-2 w-50">
               <div class="team-details w-100 text-center">
                 <img src="images/logo_2.png" alt="Image" class="img-fluid">
-                <h3>JUVENDU <span>(loss)</span></h3>
+                <h3>FC TRIGGER </h3>
                 <ul class="list-unstyled">
                   <li>Macauly Green (3)</li>
                   <li>Arham Stark (8)</li>
