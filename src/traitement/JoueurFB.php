@@ -1,13 +1,19 @@
 <?php
 
 namespace entre;
+require_once 'Utilisateur.php';
 require_once 'bdd.php';
 
 class JoueurFB{
-private $nom;
-private $prenom;
+protected $nom;
+protected $prenom;
 private $taille;
 private $bonpied;
 private $poste;
+protected $age;
+private $numero;
+
+
+
 
 }
