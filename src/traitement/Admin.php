@@ -1,5 +1,4 @@
 <?php
-namespace entre;
 require_once 'Utilisateur.php';
 require_once 'bdd.php';
 

@@ -1,6 +1,5 @@
 <?php
 
-namespace entre;
 require_once 'bdd.php';
 class Utilisateur
 {
