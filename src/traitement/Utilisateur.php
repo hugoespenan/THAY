@@ -1,9 +1,9 @@
 <?php
-
+/*
 <<<<<<< HEAD
 
 =======
->>>>>>> 817d4f82c285784d0df2a0f796de3bd1a9a2965f
+>>>>>>> 817d4f82c285784d0df2a0f796de3bd1a9a2965f*/
 require_once 'bdd.php';
 class Utilisateur
 {

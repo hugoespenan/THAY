@@ -93,49 +93,39 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
     
     
     <div class="container">
-      
+
 
       <div class="row">
         <div class="col-lg-12">
             <?php $match = new matchs();
-            $match->setScoreEquipe1(5);
-            $match->setScoreEquipe2(2);
+            $id1 = 2;
+            $match->setScoreEquipe1($id1);
+            $match->setScoreEquipe2($id1);
             ?>
           <div class="d-flex team-vs">
             <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
             <div class="team-1 w-50">
               <div class="team-details w-100 text-center">
-                <img src="images/logo_1.png" alt="Image" class="img-fluid">
-                <h3>FC THAY </h3>
+                <img src="images/FC_THAY-removebg-preview.png" alt="Image" class="img-fluid">
+                <h3><?php $nom = new matchs();
+                $nom->setNomEquipe1($id1);
+                echo $nom->getNomEquipe1();
+                ?></h3>
                 <ul class="list-unstyled">
                     <?php
                     $bdd = new bdd("projet_thay", "localhost", "", "root");
-                    $requ = $bdd->b->query("SELECT joueur_foot.* FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN joueur_foot ON joueur_foot.id_joueur_foot = buteur.ref_joueur_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot AND buteur.ref_match = resultat_foot.id_resultat_foot");
-                    $requ->fetchAll();
-                    $equipebuteur = 0;
-                    foreach ($requ as $value){
-                        $equipebuteur = $value['ref_equipe'];
-                    }
-                    $r2 = $bdd->b->prepare("SELECT nom FROM equipe WHERE id_equipe = :equipe");
-                    $r2->execute(array('equipe' => $equipebuteur));
-                    foreach ($requ as $item){
-                            if ($item['ref_equipe'] == $item['id_equipe']){
+                    $requ = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_1 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                    $requ->execute(array('id' => $id1));
+                    $res = $requ->fetchAll();
+                            if (!empty($res)){
+                                foreach ($res as $item){
                                 $buteur = new matchs();
                                 $buteur->setButeurEquipe1($item['nom']);
+                                $buteur->setMinute($item['minute']);
                                 ?>
-                                <li><?php echo $buteur->getButeurEquipe1() ?></li>
+                                <li><?php echo $buteur->getButeurEquipe1().$buteur->getMinute() ?></li>
                            <?php
-                            }
-                        if ($item['ref_equipe'] == $item['score_equipe_2']){
-                            $buteur = new matchs();
-                            $buteur->setButeurEquipe2($item['nom']);
-                            ?>
-                            <li><?php echo $buteur->getButeurEquipe2() ?></li>
-                            <?php
-                        }
-                    }
-
-
+                            }}
                   ?>
                 </ul>
               </div>
@@ -143,12 +133,25 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
             <div class="team-2 w-50">
               <div class="team-details w-100 text-center">
                 <img src="images/logo_2.png" alt="Image" class="img-fluid">
-                <h3>FC TRIGGER </h3>
+                <h3><?php
+                    $nom->setNomEquipe2($id1);
+                    echo $nom->getNomEquipe2();
+                    ?></h3>
                 <ul class="list-unstyled">
-                  <li>Macauly Green (3)</li>
-                  <li>Arham Stark (8)</li>
-                  <li>Stephan Murillo (9)</li>
-                  <li>Ned Ritter (5)</li>
+                   <?php
+                    $requ2 = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_2 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                    $requ2->execute(array('id' => $id1));
+                    $res2 = $requ2->fetchAll();
+                            if (!empty($res2)){
+                                foreach ($res2 as $item){
+                                $buteur = new matchs();
+                                $buteur->setButeurEquipe2($item['nom']);
+                                $buteur->setMinute($item['minute']);
+                                ?>
+                    <li><?php echo $buteur->getButeurEquipe2().$buteur->getMinute() ?></li>
+                    <?php
+                    }}
+                    ?>
                 </ul>
               </div>
             </div>
@@ -166,7 +169,7 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
           <div class="col-lg-12">
             <div class="widget-next-match">
               <div class="widget-title">
-                <h3>Next Match</h3>
+                <h3>Prochain Match</h3>
               </div>
               <div class="widget-body mb-3">
                 <div class="widget-vs">
@@ -179,15 +182,14 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
                       <span class="vs"><span>VS</span></span>
                     </div>
                     <div class="team-2 text-center">
-                      <img src="images/logo_2.png" alt="Image">
-                      <h3>Soccer</h3>
+                      <img src="images/FC_THAY-removebg-preview.png" alt="Image">
+                      <h3>FC THAY</h3>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="text-center widget-vs-contents mb-4">
-                <h4>World Cup League</h4>
                 <p class="mb-5">
                   <span class="d-block">December 20th, 2020</span>
                   <span class="d-block">9:30 AM GMT+0</span>
@@ -201,73 +203,13 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
         </div>
 
         <div class="row">
+
           <div class="col-12 title-section">
-            <h2 class="heading">Upcoming Match</h2>
+            <h2 class="heading">Anciens matchs</h2>
           </div>
-          <div class="col-lg-6 mb-4">
-            <div class="bg-light p-4 rounded">
-              <div class="widget-body">
-                  <div class="widget-vs">
-                    <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                      <div class="team-1 text-center">
-                        <img src="images/logo_1.png" alt="Image">
-                        <h3>Football League</h3>
-                      </div>
-                      <div>
-                        <span class="vs"><span>VS</span></span>
-                      </div>
-                      <div class="team-2 text-center">
-                        <img src="images/logo_2.png" alt="Image">
-                        <h3>Soccer</h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="text-center widget-vs-contents mb-4">
-                  <h4>World Cup League</h4>
-                  <p class="mb-5">
-                    <span class="d-block">December 20th, 2020</span>
-                    <span class="d-block">9:30 AM GMT+0</span>
-                    <strong class="text-primary">New Euro Arena</strong>
-                  </p>
 
-                </div>
-              
-            </div>
-          </div>
-          <div class="col-lg-6 mb-4">
-            <div class="bg-light p-4 rounded">
-              <div class="widget-body">
-                  <div class="widget-vs">
-                    <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                      <div class="team-1 text-center">
-                        <img src="images/logo_3.png" alt="Image">
-                        <h3>Football League</h3>
-                      </div>
-                      <div>
-                        <span class="vs"><span>VS</span></span>
-                      </div>
-                      <div class="team-2 text-center">
-                        <img src="images/logo_4.png" alt="Image">
-                        <h3>Soccer</h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="text-center widget-vs-contents mb-4">
-                  <h4>World Cup League</h4>
-                  <p class="mb-5">
-                    <span class="d-block">December 20th, 2020</span>
-                    <span class="d-block">9:30 AM GMT+0</span>
-                    <strong class="text-primary">New Euro Arena</strong>
-                  </p>
-
-                </div>
-              
-            </div>
-          </div>
 
           <div class="col-lg-6 mb-4">
             <div class="bg-light p-4 rounded">
@@ -275,64 +217,200 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
                   <div class="widget-vs">
                     <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
                       <div class="team-1 text-center">
-                        <img src="images/logo_1.png" alt="Image">
-                        <h3>Football League</h3>
                       </div>
                       <div>
-                        <span class="vs"><span>VS</span></span>
                       </div>
                       <div class="team-2 text-center">
-                        <img src="images/logo_2.png" alt="Image">
-                        <h3>Soccer</h3>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="text-center widget-vs-contents mb-4">
-                  <h4>World Cup League</h4>
-                  <p class="mb-5">
-                    <span class="d-block">December 20th, 2020</span>
-                    <span class="d-block">9:30 AM GMT+0</span>
-                    <strong class="text-primary">New Euro Arena</strong>
-                  </p>
-
+                <div class="widget-title">
+                    <h3><?php
+                        $buteur->setDate(3);
+                        echo $buteur->getDate() ?></h3>
                 </div>
-              
+
+                <div class="text-center widget-vs-contents mb-4">
+                  <p class="mb-5">
+                  </p>
+                </div>
+
             </div>
           </div>
-          <div class="col-lg-6 mb-4">
-            <div class="bg-light p-4 rounded">
-              <div class="widget-body">
-                  <div class="widget-vs">
-                    <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                      <div class="team-1 text-center">
-                        <img src="images/logo_3.png" alt="Image">
-                        <h3>Football League</h3>
-                      </div>
-                      <div>
-                        <span class="vs"><span>VS</span></span>
-                      </div>
-                      <div class="team-2 text-center">
-                        <img src="images/logo_4.png" alt="Image">
-                        <h3>Soccer</h3>
-                      </div>
+
+
+            <div class="container">
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <?php $match = new matchs();
+                        $id2 = 3;
+                        $match->setScoreEquipe1($id2);
+                        $match->setScoreEquipe2($id2);
+                        ?>
+                        <div class="d-flex team-vs">
+                            <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
+
+                            <div class="team-1 w-50">
+                                <div class="team-details w-100 text-center">
+                                    <img src="images/FC_THAY-removebg-preview.png" alt="Image" class="img-fluid">
+                                    <h3><?php $nom = new matchs();
+                                        $nom->setNomEquipe1($id2);
+                                        echo $nom->getNomEquipe1();
+                                        ?></h3>
+                                    <ul class="list-unstyled">
+                                        <?php
+                                        $bdd = new bdd("projet_thay", "localhost", "", "root");
+                                        $requ = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_1 and buteur.ref_match = resultat_foot.id_resultat_foot  and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                                        $requ->execute(array('id' => $id2));
+                                        $res = $requ->fetchAll();
+                                        if (!empty($res)){
+                                            foreach ($res as $item){
+                                                $buteur = new matchs();
+                                                $buteur->setButeurEquipe1($item['nom']);
+                                                $buteur->setMinute($item['minute']);
+                                                ?>
+                                                <li><?php echo $buteur->getButeurEquipe1().$buteur->getMinute() ?></li>
+                                                <?php
+                                            }}
+                                        ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="team-2 w-50">
+                                <div class="team-details w-100 text-center">
+                                    <img src="images/logo_2.png" alt="Image" class="img-fluid">
+                                    <h3><?php
+                                        $nom->setNomEquipe2($id2);
+                                        echo $nom->getNomEquipe2();
+                                        ?></h3>
+                                    <ul class="list-unstyled">
+                                        <?php
+                                        $requ2 = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_2 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                                        $requ2->execute(array('id' => $id2));
+                                        $res2 = $requ2->fetchAll();
+                                        if (!empty($res2)){
+                                            foreach ($res2 as $item){
+                                                $buteur = new matchs();
+                                                $buteur->setButeurEquipe2($item['nom']);
+                                                $buteur->setMinute($item['minute']);
+                                                ?>
+                                                <li><?php echo $buteur->getButeurEquipe2().$buteur->getMinute() ?></li>
+                                                <?php
+                                            }}
+                                        ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-
-                <div class="text-center widget-vs-contents mb-4">
-                  <h4>World Cup League</h4>
-                  <p class="mb-5">
-                    <span class="d-block">December 20th, 2020</span>
-                    <span class="d-block">9:30 AM GMT+0</span>
-                    <strong class="text-primary">New Euro Arena</strong>
-                  </p>
-
-                </div>
-              
             </div>
-          </div>
+
+
+            <div class="col-lg-6 mb-4">
+                <div class="bg-light p-4 rounded">
+                    <div class="widget-body">
+                        <div class="widget-vs">
+                            <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                <div class="team-1 text-center">
+                                </div>
+                                <div>
+                                </div>
+                                <div class="team-2 text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="widget-title">
+                        <h3><?php
+                            $buteur->setDate(3);
+                            echo $buteur->getDate() ?></h3>
+                    </div>
+
+                    <div class="text-center widget-vs-contents mb-4">
+                        <p class="mb-5">
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="container">
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <?php $match = new matchs();
+                        $id2 = 3;
+                        $match->setScoreEquipe1($id2);
+                        $match->setScoreEquipe2($id2);
+                        ?>
+                        <div class="d-flex team-vs">
+                            <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
+
+                            <div class="team-1 w-50">
+                                <div class="team-details w-100 text-center">
+                                    <img src="images/FC_THAY-removebg-preview.png" alt="Image" class="img-fluid">
+                                    <h3><?php $nom = new matchs();
+                                        $nom->setNomEquipe1($id2);
+                                        echo $nom->getNomEquipe1();
+                                        ?></h3>
+                                    <ul class="list-unstyled">
+                                        <?php
+                                        $bdd = new bdd("projet_thay", "localhost", "", "root");
+                                        $requ = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_1 and buteur.ref_match = resultat_foot.id_resultat_foot  and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                                        $requ->execute(array('id' => $id2));
+                                        $res = $requ->fetchAll();
+                                        if (!empty($res)){
+                                            foreach ($res as $item){
+                                                $buteur = new matchs();
+                                                $buteur->setButeurEquipe1($item['nom']);
+                                                $buteur->setMinute($item['minute']);
+                                                ?>
+                                                <li><?php echo $buteur->getButeurEquipe1().$buteur->getMinute() ?></li>
+                                                <?php
+                                            }}
+                                        ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="team-2 w-50">
+                                <div class="team-details w-100 text-center">
+                                    <img src="images/logo_2.png" alt="Image" class="img-fluid">
+                                    <h3><?php
+                                        $nom->setNomEquipe2($id2);
+                                        echo $nom->getNomEquipe2();
+                                        ?></h3>
+                                    <ul class="list-unstyled">
+                                        <?php
+                                        $requ2 = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_2 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                                        $requ2->execute(array('id' => $id2));
+                                        $res2 = $requ2->fetchAll();
+                                        if (!empty($res2)){
+                                            foreach ($res2 as $item){
+                                                $buteur = new matchs();
+                                                $buteur->setButeurEquipe2($item['nom']);
+                                                $buteur->setMinute($item['minute']);
+                                                ?>
+                                                <li><?php echo $buteur->getButeurEquipe2().$buteur->getMinute() ?></li>
+                                                <?php
+                                            }}
+                                        ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
           
         </div>
       </div>
