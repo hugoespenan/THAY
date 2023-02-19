@@ -3,71 +3,16 @@ session_start();
 require_once '../src/traitement/matchs.php';
 require_once '../src/bdd/bdd.php';
 $bdd = new bdd("projet_thay", "localhost", "", "root");
+include("head.html");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>Soccer &mdash; Website by Colorlib</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-  <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
-  <link rel="stylesheet" href="css/jquery-ui.css">
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
-
-  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-
-  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-  <link rel="stylesheet" href="css/aos.css">
-
-  <link rel="stylesheet" href="css/style.css">
-
-
-
-</head>
-
-<body>
-
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-
-
-    <header class="site-navbar py-4" role="banner">
-
-      <div class="container">
-        <div class="d-flex align-items-center">
-          <div class="site-logo">
-            <a href="index.html">
-              <img src="images/logo.png" alt="Logo">
-            </a>
-          </div>
           <div class="ml-auto">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li class="active"><a href="matches.html" class="nav-link">Matches</a></li>
-                <li><a href="players.html" class="nav-link">Players</a></li>
-                <li><a href="equipe.html" class="nav-link">Équipe</a></li>
-                <li><a href="inscription.html" class="nav-link">Inscription</a></li>
+                <li><a href="index.php" class="nav-link">Home</a></li>
+                <li class="active"><a href="matches.php" class="nav-link">Matches</a></li>
+                <li><a href="players.php" class="nav-link">Players</a></li>
+                <li><a href="equipe.php" class="nav-link">Équipe</a></li>
+                <li><a href="inscription.php" class="nav-link">Inscription</a></li>
               </ul>
             </nav>
 
@@ -90,17 +35,20 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
       </div>
     </div>
 
-    
-    
+
     <div class="container">
 
+<?php
+$requete = $bdd->b->query("SELECT id_resultat_foot FROM resultat_foot ORDER BY date DESC LIMIT 1");
+$resultat = $requete->fetch();
+$bonid = $resultat['id_resultat_foot'];
 
+?>
       <div class="row">
         <div class="col-lg-12">
             <?php $match = new matchs();
-            $id1 = 2;
-            $match->setScoreEquipe1($id1);
-            $match->setScoreEquipe2($id1);
+            $match->setScoreEquipe1($bonid);
+            $match->setScoreEquipe2($bonid);
             ?>
           <div class="d-flex team-vs">
             <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
@@ -108,14 +56,14 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
               <div class="team-details w-100 text-center">
                 <img src="images/FC_THAY-removebg-preview.png" alt="Image" class="img-fluid">
                 <h3><?php $nom = new matchs();
-                $nom->setNomEquipe1($id1);
+                $nom->setNomEquipe1($bonid);
                 echo $nom->getNomEquipe1();
                 ?></h3>
                 <ul class="list-unstyled">
                     <?php
                     $bdd = new bdd("projet_thay", "localhost", "", "root");
                     $requ = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_1 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
-                    $requ->execute(array('id' => $id1));
+                    $requ->execute(array('id' => $bonid));
                     $res = $requ->fetchAll();
                             if (!empty($res)){
                                 foreach ($res as $item){
@@ -134,13 +82,13 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
               <div class="team-details w-100 text-center">
                 <img src="images/logo_2.png" alt="Image" class="img-fluid">
                 <h3><?php
-                    $nom->setNomEquipe2($id1);
+                    $nom->setNomEquipe2($bonid);
                     echo $nom->getNomEquipe2();
                     ?></h3>
                 <ul class="list-unstyled">
                    <?php
                     $requ2 = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_2 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
-                    $requ2->execute(array('id' => $id1));
+                    $requ2->execute(array('id' => $bonid));
                     $res2 = $requ2->fetchAll();
                             if (!empty($res2)){
                                 foreach ($res2 as $item){
@@ -161,7 +109,11 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
     </div>
   
 
-    
+
+
+
+
+
     <div class="site-section bg-dark">
       <div class="container">
         
@@ -210,45 +162,50 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
 
 
 
+<?php
+$eme = $bdd->b->query("SELECT id_resultat_foot FROM resultat_foot ORDER BY date DESC LIMIT 1, 2");
+$rr = $eme->fetchAll();
+foreach ($rr as $value){
 
-          <div class="col-lg-6 mb-4">
-            <div class="bg-light p-4 rounded">
-              <div class="widget-body">
-                  <div class="widget-vs">
+?>
+    <div class="col-lg-6 mb-4">
+        <div class="bg-light p-4 rounded">
+            <div class="widget-body">
+                <div class="widget-vs">
                     <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                      <div class="team-1 text-center">
-                      </div>
-                      <div>
-                      </div>
-                      <div class="team-2 text-center">
-                      </div>
+                        <div class="team-1 text-center">
+                        </div>
+                        <div>
+                        </div>
+                        <div class="team-2 text-center">
+                        </div>
                     </div>
-                  </div>
                 </div>
-
-                <div class="widget-title">
-                    <h3><?php
-                        $buteur->setDate(3);
-                        echo $buteur->getDate() ?></h3>
-                </div>
-
-                <div class="text-center widget-vs-contents mb-4">
-                  <p class="mb-5">
-                  </p>
-                </div>
-
             </div>
-          </div>
 
+            <div class="widget-title">
+                <h3><?php
+                    $id2 = $value['id_resultat_foot'];
+                    $buteur = new matchs();
+                    $buteur->setDate($id2);
+                    echo $buteur->getDate() ?></h3>
+            </div>
 
-            <div class="container">
+            <div class="text-center widget-vs-contents mb-4">
+                <p class="mb-5">
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
 
 
                 <div class="row">
                     <div class="col-lg-12">
 
                         <?php $match = new matchs();
-                        $id2 = 3;
                         $match->setScoreEquipe1($id2);
                         $match->setScoreEquipe2($id2);
                         ?>
@@ -310,6 +267,12 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
                     </div>
                 </div>
             </div>
+
+
+<?php
+}
+?>
+
 
 
             <div class="col-lg-6 mb-4">
@@ -328,9 +291,12 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
                     </div>
 
                     <div class="widget-title">
-                        <h3><?php
-                            $buteur->setDate(3);
-                            echo $buteur->getDate() ?></h3>
+                        <form method="post">
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit" name="bouton">Afficher plus</button>
+                            </div>
+                        </form>
+
                     </div>
 
                     <div class="text-center widget-vs-contents mb-4">
@@ -342,75 +308,129 @@ $bdd = new bdd("projet_thay", "localhost", "", "root");
             </div>
 
 
-            <div class="container">
-
-
-                <div class="row">
-                    <div class="col-lg-12">
-
-                        <?php $match = new matchs();
-                        $id2 = 3;
-                        $match->setScoreEquipe1($id2);
-                        $match->setScoreEquipe2($id2);
-                        ?>
-                        <div class="d-flex team-vs">
-                            <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
-
-                            <div class="team-1 w-50">
-                                <div class="team-details w-100 text-center">
-                                    <img src="images/FC_THAY-removebg-preview.png" alt="Image" class="img-fluid">
-                                    <h3><?php $nom = new matchs();
-                                        $nom->setNomEquipe1($id2);
-                                        echo $nom->getNomEquipe1();
-                                        ?></h3>
-                                    <ul class="list-unstyled">
-                                        <?php
-                                        $bdd = new bdd("projet_thay", "localhost", "", "root");
-                                        $requ = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_1 and buteur.ref_match = resultat_foot.id_resultat_foot  and id_resultat_foot = :id ORDER BY buteur.minute ASC");
-                                        $requ->execute(array('id' => $id2));
-                                        $res = $requ->fetchAll();
-                                        if (!empty($res)){
-                                            foreach ($res as $item){
-                                                $buteur = new matchs();
-                                                $buteur->setButeurEquipe1($item['nom']);
-                                                $buteur->setMinute($item['minute']);
-                                                ?>
-                                                <li><?php echo $buteur->getButeurEquipe1().$buteur->getMinute() ?></li>
-                                                <?php
-                                            }}
-                                        ?>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="team-2 w-50">
-                                <div class="team-details w-100 text-center">
-                                    <img src="images/logo_2.png" alt="Image" class="img-fluid">
-                                    <h3><?php
-                                        $nom->setNomEquipe2($id2);
-                                        echo $nom->getNomEquipe2();
-                                        ?></h3>
-                                    <ul class="list-unstyled">
-                                        <?php
-                                        $requ2 = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_2 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
-                                        $requ2->execute(array('id' => $id2));
-                                        $res2 = $requ2->fetchAll();
-                                        if (!empty($res2)){
-                                            foreach ($res2 as $item){
-                                                $buteur = new matchs();
-                                                $buteur->setButeurEquipe2($item['nom']);
-                                                $buteur->setMinute($item['minute']);
-                                                ?>
-                                                <li><?php echo $buteur->getButeurEquipe2().$buteur->getMinute() ?></li>
-                                                <?php
-                                            }}
-                                        ?>
-                                    </ul>
-                                </div>
-                            </div>
+            <?php
+            if (isset($_POST['bouton']) AND !isset($_POST['boutonmoins'])){
+                $plus = $bdd->b->query("SELECT id_resultat_foot FROM resultat_foot ORDER BY date DESC LIMIT 3, 20");
+            $rrr = $plus->fetchAll();
+            foreach ($rrr as $value){
+                ?>
+                <div class="col-lg-6 mb-4">
+        <div class="bg-light p-4 rounded">
+            <div class="widget-body">
+                <div class="widget-vs">
+                    <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                        <div class="team-1 text-center">
+                        </div>
+                        <div>
+                        </div>
+                        <div class="team-2 text-center">
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="widget-title">
+                <h3><?php
+                    $id2 = $value['id_resultat_foot'];
+                    $buteur = new matchs();
+                    $buteur->setDate($id2);
+                    echo $buteur->getDate() ?></h3>
+        </div>
+
+          <div class="text-center widget-vs-contents mb-4">
+              <p class="mb-5">
+              </p>
+          </div>
+
+      </div>
+    </div>
+
+      <div class="container">
+
+
+          <div class="row">
+              <div class="col-lg-12">
+
+                  <?php $match = new matchs();
+                  $match->setScoreEquipe1($id2);
+                  $match->setScoreEquipe2($id2);
+                  ?>
+                  <div class="d-flex team-vs">
+                      <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
+
+                      <div class="team-1 w-50">
+                          <div class="team-details w-100 text-center">
+                              <img src="images/FC_THAY-removebg-preview.png" alt="Image" class="img-fluid">
+                              <h3><?php $nom = new matchs();
+                                  $nom->setNomEquipe1($id2);
+                                  echo $nom->getNomEquipe1();
+                                  ?></h3>
+                              <ul class="list-unstyled">
+                                  <?php
+                                  $bdd = new bdd("projet_thay", "localhost", "", "root");
+                                  $requ = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_1 and buteur.ref_match = resultat_foot.id_resultat_foot  and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                                  $requ->execute(array('id' => $id2));
+                                  $res = $requ->fetchAll();
+                                  if (!empty($res)){
+                                      foreach ($res as $item){
+                                          $buteur = new matchs();
+                                          $buteur->setButeurEquipe1($item['nom']);
+                                          $buteur->setMinute($item['minute']);
+                                          ?>
+                                          <li><?php echo $buteur->getButeurEquipe1().$buteur->getMinute() ?></li>
+                                          <?php
+                                      }}
+                                  ?>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="team-2 w-50">
+                          <div class="team-details w-100 text-center">
+                              <img src="images/logo_2.png" alt="Image" class="img-fluid">
+                              <h3><?php
+                                  $nom->setNomEquipe2($id2);
+                                  echo $nom->getNomEquipe2();
+                                  ?></h3>
+                              <ul class="list-unstyled">
+                                  <?php
+                                  $requ2 = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_2 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                                  $requ2->execute(array('id' => $id2));
+                                  $res2 = $requ2->fetchAll();
+                                  if (!empty($res2)){
+                                      foreach ($res2 as $item){
+                                          $buteur = new matchs();
+                                          $buteur->setButeurEquipe2($item['nom']);
+                                          $buteur->setMinute($item['minute']);
+                                          ?>
+                                          <li><?php echo $buteur->getButeurEquipe2().$buteur->getMinute() ?></li>
+                                          <?php
+                                      }}
+                                  ?>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+              <?php
+            }
+            }
+            ?>
+            <?php
+            if (isset($_POST['bouton'])){
+
+            ?>
+            <form method="post">
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit" name="boutonmoins">Afficher moins</button>
+                </div>
+            </form>
+            <?php } ?>
+
+
+
           
         </div>
       </div>

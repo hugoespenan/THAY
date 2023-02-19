@@ -1,84 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php require_once '../src/traitement/matchs.php';
+require_once '../src/bdd/bdd.php';
+$bdd = new bdd("projet_thay", "localhost", "", "root");
+include("head.html");
+?>
+            <div class="ml-auto">
+                <nav class="site-navigation position-relative text-right" role="navigation">
+                    <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                        <li class="active"><a href="index.php" class="nav-link">Home</a></li>
+                        <li><a href="matches.php" class="nav-link">Matches</a></li>
+                        <li><a href="players.php" class="nav-link">Players</a></li>
+                        <li><a href="equipe.php" class="nav-link">Équipe</a></li>
+                        <li><a href="inscription.php" class="nav-link">Inscription</a></li>
+                    </ul>
+                </nav>
 
-<head>
-  <title>Soccer &mdash; Website by Colorlib</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="fonts/icomoon/style.css">
-
-  <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
-  <link rel="stylesheet" href="css/jquery-ui.css">
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
-  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
-
-  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-
-  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-  <link rel="stylesheet" href="css/aos.css">
-
-  <link rel="stylesheet" href="css/style.css">
-
-
-
-</head>
-
-<body>
-
-  <div class="site-wrap">
-
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close">
-          <span class="icon-close2 js-menu-toggle"></span>
+                <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
+                            class="icon-menu h3 text-white"></span></a>
+            </div>
         </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
     </div>
 
-
-    <header class="site-navbar py-4" role="banner">
-
-      <div class="container">
-        <div class="d-flex align-items-center">
-          <div class="site-logo">
-            <a href="index.html">
-              <img src="images/logo.png" alt="Logo">
-            </a>
-          </div>
-          <div class="ml-auto">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class="active"><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="matches.php" class="nav-link">Matches</a></li>
-                <li><a href="players.html" class="nav-link">Players</a></li>
-                <li><a href="equipe.html" class="nav-link">Équipe</a></li>
-                <li><a href="inscription.html" class="nav-link">Inscription</a></li>
-              </ul>
-            </nav>
-
-            <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right text-white"><span
-                class="icon-menu h3 text-white"></span></a>
-          </div>
-        </div>
-      </div>
-
-    </header>
+</header>
 
     <div class="hero overlay" style="background-image: url('images/bg_3.jpg');">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-5 ml-auto">
-            <h1 class="text-white">World Cup Event</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, molestias repudiandae pariatur.</p>
+            <h1 class="text-white">FC THAY</h1>
+            <p>Bienvenue au football club THAY, sur ce site vous pouvez consulter nos derniers matchs, notre prochain match, nous contacter et même vous inscrire au club !</p>
             <div id="date-countdown"></div>
             <p>
               <a href="#" class="btn btn-primary py-3 px-4 mr-3">Book Ticket</a>
@@ -89,37 +38,72 @@
       </div>
     </div>
 
-    
-    
-    <div class="container">
-      
 
+
+    <div class="container">
+
+      <?php
+$requete = $bdd->b->query("SELECT id_resultat_foot FROM resultat_foot ORDER BY date DESC LIMIT 1");
+      $resultat = $requete->fetch();
+      $bonid = $resultat['id_resultat_foot'];
+
+      ?>
       <div class="row">
         <div class="col-lg-12">
-          
+          <?php $match = new matchs();
+            $match->setScoreEquipe1($bonid);
+          $match->setScoreEquipe2($bonid);
+          ?>
           <div class="d-flex team-vs">
-            <span class="score">4-1</span>
+            <span class="score"><?php echo $match->getScoreEquipe1()." - ".$match->getScoreEquipe2() ?></span>
             <div class="team-1 w-50">
               <div class="team-details w-100 text-center">
-                <img src="images/logo_1.png" alt="Image" class="img-fluid">
-                <h3>LA LEGA <span>(win)</span></h3>
+                <img src="images/FC_THAY-removebg-preview.png" alt="Image" class="img-fluid">
+                <h3><?php $nom = new matchs();
+                $nom->setNomEquipe1($bonid);
+                  echo $nom->getNomEquipe1();
+                  ?></h3>
                 <ul class="list-unstyled">
-                  <li>Anja Landry (7)</li>
-                  <li>Eadie Salinas (12)</li>
-                  <li>Ashton Allen (10)</li>
-                  <li>Baxter Metcalfe (5)</li>
+                  <?php
+                    $bdd = new bdd("projet_thay", "localhost", "", "root");
+                    $requ = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_1 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                  $requ->execute(array('id' => $bonid));
+                  $res = $requ->fetchAll();
+                  if (!empty($res)){
+                  foreach ($res as $item){
+                  $buteur = new matchs();
+                  $buteur->setButeurEquipe1($item['nom']);
+                  $buteur->setMinute($item['minute']);
+                  ?>
+                  <li><?php echo $buteur->getButeurEquipe1().$buteur->getMinute() ?></li>
+                  <?php
+                            }}
+                  ?>
                 </ul>
               </div>
             </div>
             <div class="team-2 w-50">
               <div class="team-details w-100 text-center">
                 <img src="images/logo_2.png" alt="Image" class="img-fluid">
-                <h3>JUVENDU <span>(loss)</span></h3>
+                <h3><?php
+                    $nom->setNomEquipe2($bonid);
+                  echo $nom->getNomEquipe2();
+                  ?></h3>
                 <ul class="list-unstyled">
-                  <li>Macauly Green (3)</li>
-                  <li>Arham Stark (8)</li>
-                  <li>Stephan Murillo (9)</li>
-                  <li>Ned Ritter (5)</li>
+                  <?php
+                    $requ2 = $bdd->b->prepare("SELECT joueur_foot.*, buteur.minute FROM joueur_foot LEFT JOIN buteur ON buteur.ref_joueur_foot = joueur_foot.id_joueur_foot LEFT JOIN resultat_foot ON buteur.ref_match = resultat_foot.id_resultat_foot WHERE buteur.ref_joueur_foot = joueur_foot.id_joueur_foot and joueur_foot.ref_equipe = resultat_foot.ref_equipe_2 and buteur.ref_match = resultat_foot.id_resultat_foot and id_resultat_foot = :id ORDER BY buteur.minute ASC");
+                  $requ2->execute(array('id' => $bonid));
+                  $res2 = $requ2->fetchAll();
+                  if (!empty($res2)){
+                  foreach ($res2 as $item){
+                  $buteur = new matchs();
+                  $buteur->setButeurEquipe2($item['nom']);
+                  $buteur->setMinute($item['minute']);
+                  ?>
+                  <li><?php echo $buteur->getButeurEquipe2().$buteur->getMinute() ?></li>
+                  <?php
+                    }}
+                    ?>
                 </ul>
               </div>
             </div>
@@ -245,88 +229,7 @@
           </div>
           <div class="col-lg-6">
             
-            <div class="widget-next-match">
-              <table class="table custom-table">
-                <thead>
-                  <tr>
-                    <th>P</th>
-                    <th>Team</th>
-                    <th>W</th>
-                    <th>D</th>
-                    <th>L</th>
-                    <th>PTS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td><strong class="text-white">Football League</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td><strong class="text-white">Soccer</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td><strong class="text-white">Juvendo</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td><strong class="text-white">French Football League</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td><strong class="text-white">Legia Abante</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td><strong class="text-white">Gliwice League</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>7</td>
-                    <td><strong class="text-white">Cornika</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                  <tr>
-                    <td>8</td>
-                    <td><strong class="text-white">Gravity Smash</strong></td>
-                    <td>22</td>
-                    <td>3</td>
-                    <td>2</td>
-                    <td>140</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
 
-          </div>
         </div>
       </div>
     </div> <!-- .site-section -->
@@ -488,30 +391,14 @@
           </div>
           <div class="col-lg-3">
             <div class="widget mb-3">
-              <h3>Tickets</h3>
-              <ul class="list-unstyled links">
-                <li><a href="#">Online Ticket</a></li>
-                <li><a href="#">Payment and Prices</a></li>
-                <li><a href="#">Contact &amp; Booking</a></li>
-                <li><a href="#">Tickets</a></li>
-                <li><a href="#">Coupon</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="widget mb-3">
               <h3>Matches</h3>
               <ul class="list-unstyled links">
-                <li><a href="#">Standings</a></li>
-                <li><a href="#">World Cup</a></li>
-                <li><a href="#">La Lega</a></li>
-                <li><a href="#">Hyper Cup</a></li>
-                <li><a href="#">World League</a></li>
+                <li><a href="matches.php">Derniers et prochain match ⚽</a></li>
               </ul>
             </div>
           </div>
 
-          <div class="col-lg-3">
+          <!--<div class="col-lg-3">
             <div class="widget mb-3">
               <h3>Social</h3>
               <ul class="list-unstyled links">
@@ -521,7 +408,7 @@
                 <li><a href="#">Youtube</a></li>
               </ul>
             </div>
-          </div>
+          </div>-->
 
         </div>
 
