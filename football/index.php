@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php require_once '../src/traitement/matchs.php';
 require_once '../src/bdd/bdd.php';
 $bdd = new bdd("projet_thay", "localhost", "", "root");
