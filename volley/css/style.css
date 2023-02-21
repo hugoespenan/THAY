@@ -1180,28 +1180,12 @@ a:hover {
   border: 1px solid transparent;
 }
 
-/*
-
-.col-sm-6{
-
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
-
-}
-
-.mt20 {
-  margin-top: 20px;
-}*/
-
-/* Styliser le titre de la fenêtre modale */
-
+/*CODE CSS POUR LE FORMULAIRE*/
 
 .modal-lg { 
   max-width: 40%; 
-  max-height: 40%;
-  padding-top: 15%;
+  height: 60%;
+  padding-top: 5%;
 }
 
 
@@ -1211,66 +1195,38 @@ a:hover {
   text-align: center;
 }
 
-/* Styliser le formulaire de la fenêtre modale */
+
 .modal-form {
   display: flex;
   flex-direction: column;
   align-items: left;
 }
 
-/* Styliser le champ d'entrée de texte */
 .remodal-input input {
-  width: 70%;
-  border: 1px solid #e20000;
-  padding: 10px;
-  font-size: 16px;
-  margin-top: 5px;
-  font-style: italic;
-  display: inline-block;
-}
-
-
-.select{
-  padding: 10px;
-  margin-left: 50px;
-  font-style: italic;
-  
-  margin-top: 5px;
-  flex-direction: column;
-
-}
-
-
-.select2{
-  padding: 10px;
-  margin-left: 50px;
-  font-style: italic;
-  display: flex;
-  margin-top: 5px;
-  flex-direction: column;
-
-}
-
-
-/* Styliser l'étiquette de chaque champ */
-
-/* Styliser les éléments de sélection de date */
-.custom-col {
-  display: inline-block;
-  margin: 0 5px;
-}
-
-.j_register_birthday {
   width: 100%;
-  border: 1px solid #ccc;
   padding: 10px;
   font-size: 16px;
   margin-top: 5px;
+  font-style: italic;
+  display: inline-block;
 }
 
-/* Styliser les boutons */
 
-/* Styliser le bouton de fermeture */
+div.select{
+  padding: 1px;
+  margin-right: 10px;
+  font-style: italic;
+  margin-top: 5px;
+  flex-direction: column;
+
+}
+
+
+.custom-col {
+  padding: 0;
+}
+
+
 .close {
   position: absolute;
   top: 15px;
@@ -1288,3 +1244,95 @@ a:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+
+
+.col-xs-4 {
+  position: relative;
+  min-height: 1px;
+  padding: 0;
+  width: 33.33333333%;
+  float: left;
+}
+
+select, input[type="text"], input[type="password"], input[type="tel"], input[type="email"], input[type="number"], input[type="url"] {
+  background: #fff;
+  border: solid #e0e0e0 1px;
+  line-height: 32px;
+  line-height: 2rem;
+  height: 32px;
+  height: 2rem;
+  color: #5a5a5a;
+  width: 100%;
+  padding: 0 1em;
+  font-style: italic;
+}
+
+
+.remodal select, .remodal textarea, .remodal input, .remodal select:focus, .remodal textarea:focus, .remodal input:focus {
+  font-size: 0.938em;
+  font-style: italic;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0px;
+  position: relative;
+  top: 2px;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.remodal, .remodal * {
+  font-family: "Roboto",Arial,sans-serif;
+}
+
+.col-xs-12 {
+  width: 100%;
+  float: left;
+}
+
+.col-sm-6{
+  float: left;
+  }
+
+  .col-sm-6{
+    width: 50%;
+    }
+
+
+
+.form-control{
+  border-radius: 0;
+  padding: 0;
+}
+
+
+.param-actions button {
+  background: #2e2e2e;
+  color: #ffffff;
+}
+
+.param-actions button {
+  float: left;
+  width: 50%;
+  height: 62px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 62px;
+  border: none;
+}
+
+.param-actions a {
+  border-radius: 0 0 0 8px;
+}
+
+.param-actions button {
+  border-left: 1px dashed #cfcfcf;
+  border-radius: 0 0 8px 0;
+}
+
+
+/*CODE CSS POUR LE FORMULAIRE*/

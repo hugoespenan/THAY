@@ -166,8 +166,12 @@ th {
   text-align: inherit; }
 
 label {
-  display: inline-block;
-  margin-bottom: 0.5rem; }
+    margin-top: 8px;
+text-align: center;
+    font-weight: 500;
+    font-size: 0.938em;
+    display: inline-block;
+}
 
 button {
   border-radius: 0; }
