@@ -10,8 +10,10 @@ class matchs
     private $minute;
     private $nom_equipe1;
     private $nom_equipe2;
+    private $nom_equipe1p;
+    private $nom_equipe2p;
     private $date;
-
+    private $datep;
 
 
     /**
@@ -160,6 +162,69 @@ class matchs
         $res = $requ->fetch();
         $this->date = $res['date'];
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNomEquipe1p()
+    {
+        return $this->nom_equipe1p;
+    }
+
+    /**
+     * @param mixed $nom_equipe1p
+     */
+    public function setNomEquipe1p($id)
+    {
+        $bdd = new bdd("projet_thay", "localhost", "", "root");
+        $requ = $bdd->b->prepare("SELECT nom FROM equipe LEFT JOIN prochain_match ON equipe.id_equipe = prochain_match.ref_equipe_1 WHERE equipe.id_equipe = prochain_match.ref_equipe_1 and prochain_match.id_prochain_match = :id");
+        $requ->execute(array('id' => $id));
+        $res = $requ->fetch();
+        $nom_equipe1p = $res['nom'];
+        $this->nom_equipe1p = $nom_equipe1p;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNomEquipe2p()
+    {
+        return $this->nom_equipe2p;
+    }
+
+    /**
+     * @param mixed $nom_equipe2p
+     */
+    public function setNomEquipe2p($id)
+    {
+        $bdd = new bdd("projet_thay", "localhost", "", "root");
+        $requ = $bdd->b->prepare("SELECT nom FROM equipe LEFT JOIN prochain_match ON equipe.id_equipe = prochain_match.ref_equipe_2 WHERE equipe.id_equipe = prochain_match.ref_equipe_2 and prochain_match.id_prochain_match = :id");
+        $requ->execute(array('id' => $id));
+        $res = $requ->fetch();
+        $nom_equipe2p = $res['nom'];
+        $this->nom_equipe2p = $nom_equipe2p;    }
+
+    /**
+     * @return mixed
+     */
+    public function getDatep()
+    {
+        return $this->datep;
+    }
+
+    /**
+     * @param mixed $datep
+     */
+    public function setDatep($id)
+    {
+        $bdd = new bdd("projet_thay", "localhost", "", "root");
+        $requ = $bdd->b->prepare("SELECT date FROM prochain_match WHERE id_prochain_match = :id");
+        $requ->execute(array('id' => $id));
+        $res = $requ->fetch();
+        $this->datep = $res['date'];
+    }
+
+
 
 
 
