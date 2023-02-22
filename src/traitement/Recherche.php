@@ -1,7 +1,8 @@
 <?php
-
+require_once '../../../../../wamp64/www/Projet THAY/src/bdd/bdd.php';
 class Recherche
 {
+
     private $nom;
     private $prenom;
     private $taille;
@@ -153,8 +154,9 @@ class Recherche
     {
         $bdd = new bdd("projet_thay", "localhost", "", "root");
         $rech = $bdd->b->prepare("SELECT * FROM joueur_foot WHERE nom LIKE :nom");
-        $rech->execute(array('nom' => '%' . $nom . '%'));
-        return $rech->fetchAll();
+        $rech->execute(array('nom' => $nom . '%'));
+        $ress = $rech->fetchAll();
+        return $ress;
     }
 
 

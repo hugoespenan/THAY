@@ -1,5 +1,7 @@
 <?php
 include("head.html");
+require_once '../src/traitement/Recherche.php';
+require_once '../src/bdd/bdd.php';
 ?>
     <div class="ml-auto">
         <nav class="site-navigation position-relative text-right" role="navigation">
@@ -31,23 +33,26 @@ include("head.html");
 <?php
 if (isset($_POST['recherche'])) {
     ?>
-    <select>
+        <form method="post">
+    <select class="form-select form-select-lg mb-3" name="r">
         <option selected>Résultats de la recherche</option>
         <?php
         $rech = new Recherche();
+        $i = 0;
         foreach ($rech->recherch($_POST['recherche']) as $item) {
             ?>
             <option><?php echo $item['nom'] ?></option>
 
             <?php
+            $i=$i+1;
         }
         ?>
     </select>
+        </form>
 
     <?php
 }
 ?>
-
     </header>
 
     <div class="hero overlay" style="background-image: url('images/bg_3.jpg');">
