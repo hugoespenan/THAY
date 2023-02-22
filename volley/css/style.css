@@ -1188,18 +1188,33 @@ a:hover {
   padding-top: 5%;
 }
 
+.modal-header{
+  background-color: #333333;
+  border-radius: 0;
+  
+}
+
+
+.modal-body{
+
+  flex:left;
+  padding:1rem;
+}
+
 
 .modal-title {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
+  color: white;
 }
 
 
 .modal-form {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  padding-top: 10%;
+  float: left;
 }
 
 .remodal-input input {
@@ -1233,7 +1248,7 @@ div.select{
   right: 15px;
   font-size: 30px;
   font-weight: bold;
-  color: #000;
+  color: #ffffff;
   opacity: 0.5;
   transition: all 0.3s;
 }
@@ -1294,14 +1309,14 @@ select, input[type="text"], input[type="password"], input[type="tel"], input[typ
   float: left;
 }
 
-.col-sm-6{
-  float: left;
-  }
+.col-sm-6 {
+  width: 50%;
+}
 
-  .col-sm-6{
-    width: 50%;
-    }
 
+.col-sm-7 {
+  width: 50%;
+}
 
 
 .form-control{
@@ -1333,6 +1348,7 @@ select, input[type="text"], input[type="password"], input[type="tel"], input[typ
   border-left: 1px dashed #cfcfcf;
   border-radius: 0 0 8px 0;
 }
+
 
 
 /*CODE CSS POUR LE FORMULAIRE*/
