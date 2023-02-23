@@ -8,7 +8,7 @@ require_once '../src/bdd/bdd.php';
             <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="index.php" class="nav-link">Home</a></li>
                 <li><a href="matches.php" class="nav-link">Matches</a></li>
-                <li class="active"><a href="players.php" class="nav-link">Players</a></li>
+                <li class="active"><a href="players.php" class="nav-link">Joueurs</a></li>
                 <li><a href="equipe.php" class="nav-link">Équipe</a></li>
                 <li><a href="inscription.php" class="nav-link">Inscription</a></li>
             </ul>
