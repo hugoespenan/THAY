@@ -1,5 +1,6 @@
 <?php
 include("head.html");
+require_once __DIR__ .'/../src/traitement/Utilisateur.php';
 ?>
           <div class="ml-auto">
             <nav class="site-navigation position-relative text-right" role="navigation">
@@ -35,7 +36,7 @@ include("head.html");
       <div class="container">
         <div class="row">
           <div class="col-lg-7">
-            <form action="#">
+            <form method="post">
               <div class="form-group">
                 <input type="text" name="nom" class="form-control" placeholder="Nom">
               </div>
@@ -58,10 +59,13 @@ include("head.html");
                 <input type="number" name="numero" class="form-control" placeholder="Numéro">
               </div>
               <div class="form-group">
-                <input type="submit" value="Envoyer la candidature">
+                <input type="submit" name="submit" value="Envoyer la candidature">
               </div>
 
-            </form>  
+            </form>
+              <?php
+
+              ?>
           </div>
           <div class="col-lg-4 ml-auto">
             

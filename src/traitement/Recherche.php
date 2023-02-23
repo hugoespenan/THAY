@@ -1,5 +1,5 @@
 <?php
-require_once '../../../../../wamp64/www/Projet THAY/src/bdd/bdd.php';
+require_once __DIR__ .'/../bdd/bdd.php';
 class Recherche
 {
 

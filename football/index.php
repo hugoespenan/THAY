@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<?php require_once '../src/traitement/matchs.php';
-require_once '../src/bdd/bdd.php';
-require_once '../src/traitement/Recherche.php';
+<?php require_once __DIR__ .'/../src/traitement/matchs.php';
+require_once __DIR__ .'/../src/bdd/bdd.php';
+require_once __DIR__ .'/../src/traitement/Recherche.php';
 $bdd = new bdd("projet_thay", "localhost", "", "root");
 include("head.html");
 ?>

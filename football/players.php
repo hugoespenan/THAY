@@ -1,7 +1,7 @@
 <?php
 include("head.html");
-require_once '../src/traitement/Recherche.php';
-require_once '../src/bdd/bdd.php';
+require_once __DIR__ .'/../src/traitement/Recherche.php';
+require_once __DIR__ .'/../src/bdd/bdd.php';
 ?>
     <div class="ml-auto">
         <nav class="site-navigation position-relative text-right" role="navigation">
