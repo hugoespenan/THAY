@@ -729,9 +729,10 @@
 												</div>
 											</div>
 										</div>
-										<div class="button">
-									<a class="btn btn-primary" name="envoie" type="submit">Créer</a>
-								</div>
+										<div class="">
+											<button class="btn btn-primary" style="text-transform: unset" type="submit" name="envoie">Créer</button>
+										</div>
+										
 									</div><!--Fin colonne droite-->
 								</div>
 							</div>
