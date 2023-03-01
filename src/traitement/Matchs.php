@@ -1,6 +1,6 @@
 <?php
 
-
+require_once __DIR__.'/../bdd/bdd.php';
 class matchs
 {
     private $score_equipe1;
@@ -222,6 +222,28 @@ class matchs
         $requ->execute(array('id' => $id));
         $res = $requ->fetch();
         $this->datep = $res['date'];
+    }
+
+    public function getMatchPasRempli(){
+        $bdd = new bdd("projet_thay", "localhost", "", "root");
+        $requete = $bdd->b->query("SELECT * FROM resultat_foot WHERE score_equipe_1 IS NULL AND score_equipe_2 IS NULL");
+        $res = $requete->fetchAll();
+        return $res;
+    }
+    public function remplirScore1($score1, $id){
+        $bdd = new bdd("projet_thay", "localhost", "", "root");
+        $requete = $bdd->b->prepare("UPDATE resultat_foot SET score_equipe_1 = :score1 WHERE id_resultat_foot = :id");
+        $requete->execute(array('score1' => $score1, 'id' => $id));
+    }
+    public function remplirScore2($score2, $id){
+        $bdd = new bdd("projet_thay", "localhost", "", "root");
+        $requete = $bdd->b->prepare("UPDATE resultat_foot SET score_equipe_2 = :score2 WHERE id_resultat_foot = :id");
+        $requete->execute(array('score2' => $score2, 'id' => $id));
+    }
+    public function remplirButeur1($minute, $id_match, $id_joueur){
+        $bdd = new bdd("projet_thay", "localhost", "", "root");
+        $requete = $bdd->b->prepare("INSERT INTO buteur(minute, ref_match, ref_joueur_foot) VALUES (:minute, :id, :idjoueur)");
+        $requete->execute(array('minute' => $minute, 'id' => $id_match, 'idjoueur' => $id_joueur));
     }
 
 

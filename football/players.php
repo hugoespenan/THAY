@@ -1,11 +1,9 @@
 <?php
-include("head.html");
+include("head.php");
 require_once __DIR__ .'/../src/traitement/Recherche.php';
 require_once __DIR__ .'/../src/bdd/bdd.php';
 ?>
-    <div class="ml-auto">
-        <nav class="site-navigation position-relative text-right" role="navigation">
-            <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+
                 <li><a href="index.php" class="nav-link">Home</a></li>
                 <li><a href="matches.php" class="nav-link">Matches</a></li>
                 <li class="active"><a href="players.php" class="nav-link">Joueurs</a></li>
@@ -38,13 +36,11 @@ if (isset($_POST['recherche'])) {
         <option selected>Résultats de la recherche</option>
         <?php
         $rech = new Recherche();
-        $i = 0;
         foreach ($rech->recherch($_POST['recherche']) as $item) {
             ?>
-            <option><?php echo $item['nom'] ?></option>
+            <option><?php echo $item['nom']." id = ".$item['id_joueur_foot'] ?></option>
 
             <?php
-            $i=$i+1;
         }
         ?>
     </select>
