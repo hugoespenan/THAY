@@ -1,9 +1,6 @@
 <?php
-include("head.html");
+include("head.php");
 ?>
-          <div class="ml-auto">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="index.php" class="nav-link">Home</a></li>
                 <li><a href="matches.php" class="nav-link">Matches</a></li>
                 <li><a href="players.php" class="nav-link">Players</a></li>
