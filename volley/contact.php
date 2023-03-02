@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" style="background-color: #D3B081">
-<head>
-	<title>Sportz &mdash; Colorlib Sports Team Template</title>
-	<meta charset="utf-8">
-	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-	<link href="https://fonts.googleapis.com/css?family=Mukta:300,400,700" rel="stylesheet">
-	<link href="fonts/icomoon/style.css" rel="stylesheet">
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/magnific-popup.css" rel="stylesheet">
-	<link href="css/jquery-ui.css" rel="stylesheet">
-	<link href="css/owl.carousel.min.css" rel="stylesheet">
-	<link href="css/owl.theme.default.min.css" rel="stylesheet">
-	<link href="css/aos.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
-</head>
+<?php
+include ("header.html")
+
+?>
 <body>
 	<div class="site-wrap" style="background-color: #D3B081;">
 		<header class="site-navbar absolute transparent" role="banner">
@@ -25,21 +13,21 @@
 					</div>
 					<ul class="site-menu js-clone-nav d-none d-md-block">
 						<li class="has-children active">
-							<a href="index.html">Accueil</a>
+							<a href="index.php">Accueil</a>
 							<ul class="dropdown arrow-top">
 								<li>
-									<a href="%C3%A9quipes.html">Equipe</a>
+									<a href="%C3%A9quipes.php">Equipe</a>
 								</li>
 								<li>
-									<a href="%C3%A0%20propos.html">A propos</a>
+									<a href="%C3%A0%20propos.php">A propos</a>
 								</li>
 								<li>
-									<a href="contact.html">Contact</a>
+									<a href="contact.php">Contact</a>
 								</li>
 							</ul>
 						</li>
 						<li>
-							<a href="classement.html">Classement</a>
+							<a href="classement.php">Classement</a>
 						</li>
 						<li>
 							<a data-target="#modalLoginForm" data-toggle="modal" href="">Se connecter</a>

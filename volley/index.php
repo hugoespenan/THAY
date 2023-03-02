@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>THAY Volley-Ball</title>
-	<meta charset="utf-8">
-	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-	<link href="https://fonts.googleapis.com/css?family=Mukta:300,400,700" rel="stylesheet">
-	<link href="fonts/icomoon/style.css" rel="stylesheet">
-	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js">
-	</script>
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/magnific-popup.css" rel="stylesheet">
-	<link href="css/jquery-ui.css" rel="stylesheet">
-	<link href="css/owl.carousel.min.css" rel="stylesheet">
-	<link href="css/owl.theme.default.min.css" rel="stylesheet">
-	<link href="css/aos.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
-</head>
+<?php
+include ("header.html")
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
 <body>
 	<div class="site-wrap">
 		<div class="site-mobile-menu">
@@ -36,24 +34,24 @@
 					</div>
 					<ul class="site-menu js-clone-nav d-none d-md-block">
 						<li class="has-children active">
-							<a href="index.html">Accueil</a>
+							<a href="index.php">Accueil</a>
 							<ul class="dropdown arrow-top">
 								<li>
-									<a href="%C3%A9quipes.html">Equipe</a>
+									<a href="%C3%A9quipes.php">Equipe</a>
 								</li>
 								<li>
-									<a href="%C3%A0%20propos.html">A propos</a>
+									<a href="%C3%A0%20propos.php">A propos</a>
 								</li>
 								<li>
-									<a href="contact.html">Contact</a>
+									<a href="contact.php">Contact</a>
 								</li>
 							</ul>
 						</li>
 						<li>
-							<a href="classement.html">Classement</a>
+							<a href="classement.php">Classement</a>
 						</li>
 						<li>
-							<a data-target="#login-modal" data-toggle="modal" href="">Se connecter</a>
+							<a data-target="#loginForm" data-toggle="modal" href="">Se connecter</a>
 						</li>
 						<li>
 							<a data-target="#modalLoginForm" data-toggle="modal" href="">Crée un compte</a>
@@ -739,6 +737,43 @@
 						</div>
 					</div>
 				</section>
+			</form>
+
+
+
+
+
+
+
+			
+
+			<form method="post">
+				<section>
+					<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="loginForm" role="dialog" tabindex="-1">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<div class="modal-header text-center">
+									<h4 class="modal-title w-100 font-weight-bold">Se connecter</h4><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+								</div>
+								<div class="modal-body modal-form mx-3">
+									<!--Début colonne gauche-->
+									<div class="col-sm-6 col-xs-12">
+										<!--Nom de Famille-->
+										<div class="col-xs-12 mt20">
+											<span class=""><label class="required" for="login">Login *</label></span>
+											<div class="">
+												<input class="" id="login" name="nom" placeholder="Entrez votre login" required="required" type="text">
+											</div>
+										</div><!--Prenom-->
+										<div class="col-xs-12 mt20">
+											<span class=""><label class="required" for="mdp">Mot de passe *</label></span>
+											<div class="">
+												<input class="" id="mdp" name="prenom" placeholder="Entrez votre mot de passe" required="required" type="text">
+											</div>
+										</div>
+										<div class="">
+											<button class="btn btn-primary" style="text-transform: unset" type="submit" name="envoie">Se connecter</button>
+										</div>
 			</form>
 		</div>
 
