@@ -1438,7 +1438,6 @@ select, input[type="text"], input[type="password"], input[type="tel"], input[typ
 [data-aos^=fade][data-aos^=fade].aos-animate {
   opacity: 1;
   transform: translate(0);
-  margin: 40px;
 }
 
 .btn-primary:hover {

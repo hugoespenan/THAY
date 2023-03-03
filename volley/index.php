@@ -16,50 +16,7 @@ include ("header.html")
 
 <body>
 	<div class="site-wrap">
-		<div class="site-mobile-menu">
-			<div class="site-mobile-menu-header">
-				<div class="site-mobile-menu-logo"></div>
-				<div class="site-mobile-menu-close mt-3">
-					<span class="icon-close2 js-menu-toggle"></span>
-				</div>
-			</div>
-			<div class="site-mobile-menu-body"></div>
-		</div>
-		<header class="site-navbar absolute transparent" role="banner">
-			<nav class="site-navigation position-relative text-right bg-black text-md-right" role="navigation">
-				<div class="container position-relative">
-					<div class="site-logo"></div>
-					<div class="d-inline-block d-md-none ml-md-0 mr-auto py-3">
-						<a class="site-menu-toggle js-menu-toggle text-white" href="#"><span class="icon-menu h3"></span></a>
-					</div>
-					<ul class="site-menu js-clone-nav d-none d-md-block">
-						<li class="has-children active">
-							<a href="index.php">Accueil</a>
-							<ul class="dropdown arrow-top">
-								<li>
-									<a href="%C3%A9quipes.php">Equipe</a>
-								</li>
-								<li>
-									<a href="%C3%A0%20propos.php">A propos</a>
-								</li>
-								<li>
-									<a href="contact.php">Contact</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a href="classement.php">Classement</a>
-						</li>
-						<li>
-							<a data-target="#loginForm" data-toggle="modal" href="">Se connecter</a>
-						</li>
-						<li>
-							<a data-target="#modalLoginForm" data-toggle="modal" href="">Crée un compte</a>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		</header>
+		
 		<div class="slide-one-item home-slider owl-carousel">
 			<div class="site-blocks-cover overlay" data-aos="fade" data-stellar-background-ratio="0.5" style="background-image: url(images/paris4.jpg);">
 				<div class="container">
@@ -739,13 +696,6 @@ include ("header.html")
 				</section>
 			</form>
 
-
-
-
-
-
-
-			
 
 			<form method="post">
 				<section>
