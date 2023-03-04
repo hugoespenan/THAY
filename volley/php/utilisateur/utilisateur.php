@@ -43,11 +43,10 @@ class user
         $c->execute(array('login' => $login, 'mdp' => $mdp));
         $resultat = $c->fetchAll();
         if (!empty($resultat)) {
-            foreach ($resultat as $item) {
-                $this->setId($item['id_utilisateur']);
-            }
+
+            header('Location: login.html');
         } else {
-            header("Location: index.html");
+            echo "ERREUR";
         }
     }
 
@@ -73,8 +72,6 @@ class user
                 'tel' => $tel,
                 'genre' => $genre,));
 
-        } else {
-            header("Location: index.html");
         }
     }
 

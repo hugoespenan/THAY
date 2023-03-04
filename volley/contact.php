@@ -1,5 +1,5 @@
 <?php
-include ("header.html")
+include("head.html")
 
 ?>
 <body>

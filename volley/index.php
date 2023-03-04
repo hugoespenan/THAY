@@ -1,17 +1,6 @@
 <?php
-include ("header.html")
-
+include("head.html");
 ?>
-
-
-
-
-
-
-
-
-
-
 
 
 <body>
@@ -136,9 +125,7 @@ include ("header.html")
       
       <!--POP UP SE CONNECTER A METTRE AU CENTRE DE LA PAGE-->
 			<!--Partie PHP-->
-			<?php
-
-
+<?php
 			  require_once "../volley/php/utilisateur/utilisateur.php";
 			  require_once "../volley/php/bdd/bdd.php";
 
@@ -151,10 +138,8 @@ include ("header.html")
 
 			          $user->inscription($_POST['nom'], $_POST['prenom'], $_POST['login'], $_POST['mdp'], $_POST['ville'], $_POST['jour'], $_POST['mois'], $_POST['annee'], $_POST['cp'], $_POST['tel'], $_POST['genre']);
 			      }
-			  }
-
-
-			  ?><!--Partie PHP-->
+              }
+?><!--Partie PHP-->
 			<form method="post">
 				<section>
 					<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="modalLoginForm" role="dialog" tabindex="-1">
@@ -697,6 +682,21 @@ include ("header.html")
 			</form>
 
 
+
+<?php
+
+    require_once "../volley/php/utilisateur/utilisateur.php";
+    require_once "../volley/php/bdd/bdd.php";
+    $bdd = new basededonne("thay", "localhost", "", "root");
+
+    if (isset($_POST['envoie'])) {
+		$login = $_POST['login'];
+		$mdp = $_POST['mdp'];
+
+        $user->connexion(($_POST['login']),($_POST['mdp']));
+
+	}
+?>
 			<form method="post">
 				<section>
 					<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="loginForm" role="dialog" tabindex="-1">
@@ -710,15 +710,15 @@ include ("header.html")
 									<div class="col-sm-6 col-xs-12">
 										<!--Nom de Famille-->
 										<div class="col-xs-12 mt20">
-											<span class=""><label class="required" for="login">Login *</label></span>
+											<span class=""><label class="required" for="">Login *</label></span>
 											<div class="">
-												<input class="" id="login" name="nom" placeholder="Entrez votre login" required="required" type="text">
+												<input class="" id="login" name="login" placeholder="Entrez votre login" required="required" type="text">
 											</div>
 										</div><!--Prenom-->
 										<div class="col-xs-12 mt20">
-											<span class=""><label class="required" for="mdp">Mot de passe *</label></span>
+											<span class=""><label class="required" for="">Mot de passe *</label></span>
 											<div class="">
-												<input class="" id="mdp" name="prenom" placeholder="Entrez votre mot de passe" required="required" type="text">
+												<input class="" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required="required" type="text">
 											</div>
 										</div>
 										<div class="">
