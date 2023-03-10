@@ -15,12 +15,12 @@ class user
     protected $jour;
     protected $mois;
     protected $annee;
-    protected $cp;
+    protected $mail;
     protected $tel;
     protected $genre;
 
 
-    public function __construct($nom, $prenom, $login, $mdp, $ville, $jour, $mois, $annee, $cp, $tel, $genre)
+    public function __construct($nom, $prenom, $login, $mdp, $ville, $jour, $mois, $annee, $mail, $tel, $genre)
     {
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -30,7 +30,7 @@ class user
         $this->jour = $jour;
         $this->mois = $mois;
         $this->annee = $annee;
-        $this->cp = $cp;
+        $this->mail = $mail;
         $this->tel = $tel;
         $this->genre = $genre;
     }
@@ -51,14 +51,14 @@ class user
     }
 
 
-    public function inscription($nom, $prenom, $login, $mdp, $ville, $jour, $mois, $annee, $cp, $tel, $genre)
+    public function inscription($nom, $prenom, $login, $mdp, $ville, $jour, $mois, $annee, $mail, $tel, $genre)
     {
         $cobdd = new basededonne("thay", "localhost", "", "root");
         $dist = $cobdd->b->prepare("SELECT * FROM utilisateur WHERE login = :login");
         $dist->execute(array('login' => $login));
         $res = $dist->fetchAll();
         if (empty($res)) {
-            $c = $cobdd->b->prepare("INSERT INTO utilisateur (nom, prenom, login, mdp, ville, jour, mois, annee, cp, tel, genre) VALUES (:nom, :prenom, :login, :mdp, :ville, :jour, :mois, :annee, :cp, :tel, :genre)");
+            $c = $cobdd->b->prepare("INSERT INTO utilisateur (nom, prenom, login, mdp, ville, jour, mois, annee, mail, tel, genre) VALUES (:nom, :prenom, :login, :mdp, :ville, :jour, :mois, :annee, :mail, :tel, :genre)");
             $c->execute(array(
                 'nom' => $nom,
                 'prenom' => $prenom,
@@ -68,7 +68,7 @@ class user
                 'jour' => $jour,
                 'mois' => $mois,
                 'annee' => $annee,
-                'cp' => $cp,
+                'mail' => $mail,
                 'tel' => $tel,
                 'genre' => $genre,));
 

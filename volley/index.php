@@ -134,9 +134,9 @@ include("head.html");
 
 			  if (isset($_POST['envoie'])) {
 
-			      if (!empty($_POST['nom']) and !empty($_POST['prenom']) and !empty($_POST['genre']) and !empty($_POST['jour']) and !empty($_POST['mois']) and !empty($_POST['annee']) and !empty($_POST['cp']) and !empty($_POST['ville']) and !empty($_POST['tel']) and !empty($_POST['login']) and !empty($_POST['mdp'])) {
+			      if (!empty($_POST['nom']) and !empty($_POST['prenom']) and !empty($_POST['genre']) and !empty($_POST['jour']) and !empty($_POST['mois']) and !empty($_POST['annee']) and !empty($_POST['mail']) and !empty($_POST['ville']) and !empty($_POST['tel']) and !empty($_POST['login']) and !empty($_POST['mdp'])) {
 
-			          $user->inscription($_POST['nom'], $_POST['prenom'], $_POST['login'], $_POST['mdp'], $_POST['ville'], $_POST['jour'], $_POST['mois'], $_POST['annee'], $_POST['cp'], $_POST['tel'], $_POST['genre']);
+			          $user->inscription($_POST['nom'], $_POST['prenom'], $_POST['login'], $_POST['mdp'], $_POST['ville'], $_POST['jour'], $_POST['mois'], $_POST['annee'], $_POST['mail'], $_POST['tel'], $_POST['genre']);
 			      }
               }
 ?><!--Partie PHP-->
@@ -625,14 +625,14 @@ include("head.html");
 													</option>
 												</select>
 											</div>
-										</div><!--Code Postale-->
+										</div><!--Mail-->
 										<div>
 											<div class="col-xs-12 mt20">
-												<span class=""><label class="required" for="member_user_registration_form_member_postal_code">Code postal *</label></span>
+												<span class=""><label class="required" for="">Mail *</label></span>
 											</div>
 											<div class="input">
 												<div class="" id="city-gouv">
-													<span aria-live="polite" class="ui-helper-hidden-accessible" role="status"></span> <input autocomplete="off" class="city-by-postalcode ui-autocomplete-input" id="member_user_registration_form_member_postal_code" name="cp" placeholder="Entrez le code postal" required="required" type="text">
+													<span aria-live="polite" class="ui-helper-hidden-accessible" role="status"></span> <input autocomplete="off" class="city-by-postalcode ui-autocomplete-input" id="member_user_registration_form_member_postal_code" name="mail" placeholder="Entrez votre mail" required="required" type="text">
 													<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all" id="ui-id-1" style="display: none;" tabindex="0"></ul>
 												</div>
 											</div>
